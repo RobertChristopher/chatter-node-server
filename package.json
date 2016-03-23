@@ -10,7 +10,7 @@
     "build": "babel lib -d dist --presets es2015,stage-2",
     "serve": "node dist/index.js",
     "test": "mocha --compilers js:babel-register",
-    "dynamodb": "java  -Djava.library.path=./DynamoDBLocal_lib -jar test/dynamodb_local/DynamoDBLocal.jar -sharedDb"
+    "dynamodb": "java  -Djava.library.path=./DynamoDBLocal_lib -jar test/local/dynamodb_local/DynamoDBLocal.jar -sharedDb"
   },
   "repository": {
     "type": "git",
