@@ -9,10 +9,10 @@ var agent = request(app.use('/', server))
 
 describe('Basic Auth', function () {
   const cert = fs.readFileSync('jwt_private.key');
-  var token;
+  var api_auth_token;
   before(function (done) {
     // Sign jwt token
-    token = jwt.sign({ foo: 'bar' }, cert);
+    api_auth_token = jwt.sign({ twitter_oauth_token: 'foobar' }, cert);
     done()
   })
   describe('Unauthorized', function () {
@@ -27,7 +27,7 @@ describe('Basic Auth', function () {
     it('Responds successfully when given a valid jwt', function (done) {
       agent
       .get('/user')
-      .set('x-access-token', token)
+      .set('x-access-token', api_auth_token)
       .expect(200, done)
     })
   })
