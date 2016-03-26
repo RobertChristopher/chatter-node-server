@@ -3,7 +3,7 @@ import { basic, user } from '../../lib/auth'
 const router = express.Router();
 
 router.get('/admin', basic, function (req, res, next) {
-  res.send([]);
+  res.send();
 })
 
 router.get('/user', user, function (req, res, next) {

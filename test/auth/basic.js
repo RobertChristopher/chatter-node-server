@@ -1,5 +1,6 @@
 import request from 'supertest'
 import express from 'express'
+import config from '../../config.js'
 import server from './mock_app.js'
 
 var app = express()
@@ -17,7 +18,7 @@ describe('Basic Auth', function () {
     it('Responds successfully when given valid creds', function (done) {
       agent
       .get('/admin')
-      .auth('RobAndDan', 'RobAndDaniel15520')
+      .auth(config.auth.admin_username, config.auth.admin_password)
       .expect(200, done)
     })
   })
