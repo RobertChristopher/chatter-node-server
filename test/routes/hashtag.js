@@ -1,7 +1,7 @@
 import request from 'supertest'
 import express from 'express'
 import fs from 'fs'
-import { hashtag } from '../../lib/routes'
+import hashtag from '../../lib/routes/hashtag.js'
 
 var app = express()
 var agent = request(app.use('/', hashtag))
