@@ -3,3 +3,4 @@ node_modules
 npm-debug.log
 shared-local-instance.db
 test/.env.test
+.env
