@@ -1,6 +1,6 @@
 import request from 'supertest'
 import express from 'express'
-import config from '../../config.js'
+import config from '../../lib/config.js'
 import server from './mock_app.js'
 
 var app = express()
