@@ -1,12 +1,12 @@
 import express from 'express';
-import { basic, user } from '../../lib/auth'
+import { admin_scope, user_scope } from '../../lib/auth'
 const router = express.Router();
 
-router.get('/admin', basic, function (req, res, next) {
+router.get('/admin', admin_scope, function (req, res, next) {
   res.send();
 })
 
-router.get('/user', user, function (req, res, next) {
+router.get('/user', user_scope, function (req, res, next) {
   res.send();
 })
 
