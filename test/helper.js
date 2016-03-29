@@ -18,6 +18,11 @@ beforeEach(function (done) {
   done()
 })
 
+after(function (done) {
+  module.exports.disconnect()
+  done()
+})
+
 
 module.exports.nock = function(options) {
   console.log('Mocking out HTTP Requests with nock')
