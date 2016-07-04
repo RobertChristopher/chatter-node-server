@@ -1,4 +1,9 @@
+import tables from './tables'
 import env from 'dotenv'
+import request from 'supertest'
+import Promise from 'bluebird'
+import error_handler from '../lib/error_handler.js'
+import clear_db from './clean_db.js'
 env.config({path: 'test/.env.test'});
 
 'use strict'
@@ -23,6 +28,15 @@ after(function (done) {
   done()
 })
 
+module.exports.clear_db = function () {
+  return clear_db()
+}
+
+module.exports.express = function (app) {
+  // So we can enable error reporting to client
+  app.use(error_handler())
+  return request(app)
+}
 
 module.exports.nock = function(options) {
   console.log('Mocking out HTTP Requests with nock')
