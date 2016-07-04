@@ -1,6 +1,6 @@
 import { friend_channel } from '../lib/models'
-import { user } from '../lib/models'
 import { world_channel } from '../lib/models'
+import { user } from '../lib/models'
 import vogels from 'vogels'
 import Promise from 'bluebird'
 import schemas from '../lib/models'
@@ -8,28 +8,8 @@ import config from '../config.js'
 import Joi from 'joi'
 import AWS from 'aws-sdk'
 
-require('../lib/models')
 
-module.exports.create = function () {
-  var deferred = Promise.pending()
-  vogels.createTables({
-    'User': { readCapacity: 5, writeCapacity: 10 },
-    'FriendChannel': { readCapacity: 20, writeCapacity: 4 },
-    'WorldChannel': { readCapacity: 20, writeCapacity: 4 }
-  }, function(err) {
-    if (err) {
-      console.log('Error creating tables: ', err);
-      deferred.resolve(true)
-    } else {
-      console.log('Tables has been created');
-      deferred.resolve(true)
-    }
-  });
-  return deferred.promise
-}
-
-
-module.exports.delete = function () {
+var clear_db = function () {
   var deferred = Promise.pending()
 
   AWS.config.update({
@@ -47,7 +27,8 @@ module.exports.delete = function () {
   vogels.dynamoDriver(dynamodb);
 
   deleteTables([friend_channel, world_channel, user])
-  .then(function (err) {
+  .then(function () {
+    console.log("yoo")
     deferred.resolve()
   })
   // friend_channel
@@ -72,8 +53,7 @@ function deleteTables (tables) {
 
   tables.map(function (table) {
     table.deleteTable((err) => {
-      console.log(err)
-      if(len-- == 1)
+      if(len-- < -1)
         _deferred.resolve()
     })
   })
@@ -81,20 +61,5 @@ function deleteTables (tables) {
   return _deferred.promise
 }
 
-module.exports.clear = function () {
-  var deferred = Promise.pending()
-  friend_channel
-  .scan()
-  .loadAll()
-  .exec(function (err, items) {
-    var items = (items.Items)
-    items.map(function (item) {
-      if(!item.attrs.channel_id) return
-      friend_channel.destroy(item.attrs.channel_id, item.attrs.parent_hashtag)
-    })
-    deferred.resolve(err)
-  })
-  return deferred.promise
-}
 
-
+module.exports = clear_db

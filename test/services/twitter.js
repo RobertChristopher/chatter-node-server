@@ -1,26 +1,27 @@
 import config from '../../lib/config.js'
 import { twitter } from '../../lib/services' 
-import fixture from './twitter_fixture.js'
+import { twitter_fixture } from '../fixture'
 import helper from '../helper.js'
 
 describe('Twitter', function () {
 
-  const url_regexp = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)'
   var subject;
-  var oauth_token = '713090810183606272-Knhblzn1LTKyd4DlUuFSJeQppBPL9x8'
-  var oauth_secret = 'i7QOA2hZuv28GzJRxL4DQkiQO9Zn3xka1RCaXNiLG0xWa'
+  const oauth_token = '713090810183606272-Knhblzn1LTKyd4DlUuFSJeQppBPL9x8'
+  const oauth_secret = 'i7QOA2hZuv28GzJRxL4DQkiQO9Zn3xka1RCaXNiLG0xWa'
+
 
   before(function () {
-    subject = (new twitter(fixture.auth))
+    subject = (new twitter(twitter_fixture.auth))
+
     nock('https://api.twitter.com')
       .filteringRequestBody(/.*/, '*')
       .post('/oauth/request_token')
-      .reply('200', fixture.oauth_request_token)
+      .reply('200', twitter_fixture.request_token)
     
     nock('https://api.twitter.com')
       .filteringRequestBody(/.*/, '*')
       .get('/1.1/account/verify_credentials.json')
-      .reply('200', fixture.profile)
+      .reply('200', twitter_fixture.profile)
 
   })
   describe('Oauth', function () {
@@ -46,6 +47,9 @@ describe('Twitter', function () {
       })
     })
   })
+
+  const url_regexp = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)'
+
   // describe('.get_access_token', function () {
   //   it('Successfully returns a redirect url', function (done) {
   //     subject.get_access_token()

@@ -13,7 +13,7 @@ internals.env.developement = {}
 // Amazon Web Services Configuration
 internals.aws.secret_access_key = process.env.AWS_SECRET_ACCESS_KEY
 internals.aws.aws_access_key_id = process.env.AWS_ACCESS_KEY_ID
-internals.aws.region = process.env.AWS_REGION
+internals.aws.region = process.env.AWS_REGION || "us-east-1"
 
 // PubNub Configuration
 internals.pubnub.publish_key = process.env.PUB_NUB_PUBLISH_KEY
