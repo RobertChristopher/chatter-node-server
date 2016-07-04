@@ -4,14 +4,11 @@
   "description": "NodeJS Backend",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test /*",
-    "test/watch": "mocha -w test/*.js",
-    "start": "babel-node lib/index.js --presets es2015,stage-2",
+    "test": "mocha --compilers js:babel-register",
     "test/watch": "npm run dynamodb & mocha -w test/**/**.js --compilers js:babel-register",
     "start": "npm run dynamodb & babel-node lib/index.js --presets es2015,stage-2",
     "build": "babel lib -d dist --presets es2015,stage-2",
     "serve": "node dist/index.js",
-    "test": "mocha --compilers js:babel-register",
     "dynamodb": "java  -Djava.library.path=./DynamoDBLocal_lib -jar test/local/DynamoDBLocal.jar -sharedDb",
     "killdb": "test/killdb.sh"
   },
@@ -42,6 +39,7 @@
     "dotenv": "^2.0.0",
     "express-session": "^1.13.0",
     "jsonwebtoken": "^5.7.0",
+    "pubnub": "^3.14.5",
     "qs": "^6.1.0",
     "request": "^2.69.0",
     "vogels": "^2.2.0"

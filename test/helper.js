@@ -3,7 +3,6 @@ import env from 'dotenv'
 import request from 'supertest'
 import Promise from 'bluebird'
 import error_handler from '../lib/error_handler.js'
-import clear_db from './clean_db.js'
 env.config({path: 'test/.env.test'});
 
 'use strict'
@@ -18,6 +17,17 @@ global.expect = chai.expect
 
 global.nock = require('nock')
 
+before(function (done) {
+  this.timeout(20000)
+  // tables.delete().then(function (err) {
+  //   console.log(err)
+  // })
+  tables.create()
+  .then(function () {
+    done()
+  })
+})
+
 beforeEach(function (done) {
   module.exports.connect()
   done()
@@ -26,10 +36,13 @@ beforeEach(function (done) {
 after(function (done) {
   module.exports.disconnect()
   done()
+  // tables.delete().then(function (err) {
+  //   done()
+  // })
 })
 
 module.exports.clear_db = function () {
-  return clear_db()
+  return tables.clear()
 }
 
 module.exports.express = function (app) {

@@ -16,7 +16,7 @@ const oauth_token = '713090810183606272-Knhblzn1LTKyd4DlUuFSJeQppBPL9x8'
 const oauth_secret = 'i7QOA2hZuv28GzJRxL4DQkiQO9Zn3xka1RCaXNiLG0xWa'
 
 describe('Hashtag Router', function () {
-
+  this.timeout(5000)
   var api_auth_token;
   var api_auth_token_2;
 
@@ -127,10 +127,26 @@ describe('Hashtag Router', function () {
   })
   describe('/:name/users', function () {
     describe('POST /', function () {
-      it('Successfully responds')
+      it('Successfully responds', function (done) {
+        agent
+        .post('/hashtag/trump/users')
+        .set('x-access-token', api_auth_token)
+        .end(function (err, res) {
+          expect(res.status).to.equal(200)
+          done()
+        })
+      })
     })
     describe('DELETE /', function () {
-      it('Successfully responds')
+      it('Successfully responds', function (done) {
+        agent
+        .delete('/hashtag/trump/users')
+        .set('x-access-token', api_auth_token)
+        .end(function (err, res) {
+          expect(res.status).to.equal(200)
+          done()
+        })
+      })
     })
   })
   after(function (done) {
